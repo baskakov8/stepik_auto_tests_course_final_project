@@ -1,4 +1,5 @@
 import pytest
+import math
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from .pages.main_page import MainPage
