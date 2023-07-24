@@ -12,3 +12,22 @@ def test_guest_can_add_product_to_basket(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.should_add_product_to_basket()
+
+@pytest.mark.xfail
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    page = ProductPage(browser, base_link)
+    page.open()
+    page.should_add_product_to_basket_without_quiz()
+    page.should_not_be_success_message()
+
+def test_guest_cant_see_success_message(browser):
+    page = ProductPage(browser, base_link)
+    page.open()
+    page.should_not_be_success_message()
+
+@pytest.mark.xfail
+def test_message_disappeared_after_adding_product_to_basket(browser):
+    page = ProductPage(browser, base_link)
+    page.open()
+    page.should_add_product_to_basket_without_quiz()
+    page.should_disappeared_success_message()
