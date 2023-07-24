@@ -4,6 +4,7 @@ import time
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from .pages.product_page import ProductPage
+from .pages.basket_page import BasketPage
 
 base_link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
 
@@ -13,7 +14,7 @@ def test_guest_can_add_product_to_basket(browser):
     page.should_add_product_to_basket()
 
 @pytest.mark.parametrize('link', [f'{base_link}?promo=offer{i}' if i != 7 else pytest.param(f'{base_link}?promo=offer{i}', marks=pytest.mark.xfail) for i in range(10)])
-def test_guest_can_add_product_to_basket(browser, link):
+def test_guest_can_add_product_to_basket_promo(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.should_add_product_to_basket()
@@ -42,3 +43,14 @@ def test_guest_should_see_login_link_on_product_page(browser):
     page = ProductPage(browser, link)
     page.open()
     page.should_be_login_link()
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    page = ProductPage(browser, base_link)
+    page.open()
+    page.go_to_basket_page()
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.should_be_no_products_in_basket()
+    basket_page.should_be_text_basket_empty()
+
+if __name__ == '__main__':
+    pytest.main()
