@@ -32,14 +32,14 @@ class TestUserAddToBasketFromProductPage:
         page.open()
         page.should_not_be_success_message()
 
-@pytest.mark.need_review
-def test_guest_can_add_product_to_basket(browser):
+def test_guest_can_add_product_to_basket_without_promo(browser):
     page = ProductPage(browser, base_link)
     page.open()
     page.should_add_product_to_basket_without_quiz()
 
+@pytest.mark.need_review
 @pytest.mark.parametrize('link', [f'{base_link}?promo=offer{i}' if i != 7 else pytest.param(f'{base_link}?promo=offer{i}', marks=pytest.mark.xfail) for i in range(10)])
-def test_guest_can_add_product_to_basket_promo(browser, link):
+def test_guest_can_add_product_to_basket(browser, link):
     page = ProductPage(browser, link)
     page.open()
     page.should_add_product_to_basket()
