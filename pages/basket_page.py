@@ -3,7 +3,7 @@ from .locators import BasketPageLocators
 from selenium.common.exceptions import NoSuchElementException
 
 class BasketPage(BasePage):
-    '''Description of the main page with test methods'''
+    '''Description of the basket page with test methods'''
 
     def should_be_no_products_in_basket(self):
         assert self.are_not_product_in_basket(*BasketPageLocators.BASKET_NOT_EMPTY), 'The basket should be empty, but there are products'
